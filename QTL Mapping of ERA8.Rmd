@@ -1,0 +1,449 @@
+---
+title: "QTL Mapping of ERA8"
+output:
+  html_document:
+    code_download: yes
+    toc: true
+    toc_depth: 5
+    toc_float: true
+    theme: flatly
+  pdf_document: default
+date: "`r format(Sys.time(), '%Y.%m.%d')`"
+author: Martinez et al. 2019
+---
+
+Library Load
+```{r warning=FALSE, message=FALSE}
+library(qtl)
+library(ggplot2); font<-element_text(face = "bold",  size = 16) #ggplot preference
+
+```
+
+
+## Zak/ZakERA8 BC3F2:3
+
+All Data combined
+```{r warning=FALSE, message=FALSE}
+data <- read.cross("csv",".","./ZZ8_SNP1-SNP_30_all.csv",na.strings=c("-","NA","."),BC.gen=3, F.gen=2)
+data_2 <- calc.genoprob(data, step=0)
+out.cimPGavg <- cim(data_2, pheno.col="PG",map.function=c("kosambi"),method=c("hk"))
+out.cimPGavg$Trait <- ("PG") 
+out.cimGIavg <- cim(data_2, pheno.col="GI",map.function=c("kosambi"),method=c("hk"))
+out.cimGIavg$Trait <- ("GI")
+a <- scanone(data, method="hk", pheno.col = "PG", n.perm=1000)
+b <- scanone(data, method="hk", pheno.col = "GI", n.perm=1000)
+summary(a) #2.06
+summary(b) #1.99
+ZZ8_all <- rbind(out.cimPGavg, out.cimGIavg)
+ZZ8_all$Population <- ("all")
+```
+
+X5.1 only 
+```{r  warning=FALSE, message=FALSE}
+data5.1<-read.cross("csv",".","./ZZ8_SNP1-SNP_30_5.1.csv",na.strings=c("-","NA","."),BC.gen=3, F.gen=2)
+data_2 <- calc.genoprob(data5.1, step=0)
+out.cimPGavg <- cim(data_2, pheno.col="PG",map.function=c("kosambi"),method=c("hk"))
+out.cimPGavg$Trait <- ("PG") 
+out.cimGIavg <- cim(data_2, pheno.col="GI",map.function=c("kosambi"),method=c("hk"))
+out.cimGIavg$Trait <- ("GI")
+a <- scanone(data5.1, method="hk", pheno.col = "PG", n.perm=1000)
+b <- scanone(data5.1, method="hk", pheno.col = "GI", n.perm=1000)
+summary(a) #1.92
+summary(b) #1.83
+ZZ8_5.1 <- rbind(out.cimPGavg, out.cimGIavg)
+ZZ8_5.1$Population <- ("5.1")
+```
+
+X5.1a only
+```{r  warning=FALSE, message=FALSE}
+data5.2a<-read.cross("csv",".","./ZZ8_SNP1-SNP_30_5.2a.csv",na.strings=c("-","NA","."),BC.gen=3, F.gen=2)
+data_2 <- calc.genoprob(data5.2a, step=0)
+out.cimPGavg <- cim(data_2, pheno.col="PG",map.function=c("kosambi"),method=c("hk"))
+out.cimPGavg$Trait <- ("PG") 
+out.cimGIavg <- cim(data_2, pheno.col="GI",map.function=c("kosambi"),method=c("hk"))
+out.cimGIavg$Trait <- ("GI")
+a <- scanone(data5.2a, method="hk", pheno.col = "PG", n.perm=1000)
+b <- scanone(data5.2a, method="hk", pheno.col = "GI", n.perm=1000)
+summary(a) #1.77
+summary(b) #1.78
+ZZ8_5.2a <- rbind(out.cimPGavg, out.cimGIavg)
+ZZ8_5.2a$Population <- ("5.2a")
+
+```
+
+X5.2b only
+```{r  warning=FALSE, message=FALSE}
+
+data5.2b <- read.cross("csv",".","./ZZ8_SNP1-SNP_30_5.2b.csv",na.strings=c("-","NA","."),BC.gen=3, F.gen=2)
+data_2 <- calc.genoprob(data5.2b, step=0)
+out.cimPGavg <- cim(data_2, pheno.col="PG",map.function=c("kosambi"),method=c("hk"))
+out.cimPGavg$Trait <- ("PG") 
+out.cimGIavg <- cim(data_2, pheno.col="GI",map.function=c("kosambi"),method=c("hk"))
+out.cimGIavg$Trait <- ("GI")
+a <- scanone(data5.2b, method="hk", pheno.col = "PG", n.perm=1000)
+b <- scanone(data5.2b, method="hk", pheno.col = "GI", n.perm=1000)
+summary(a) #1.89
+summary(b) #1.88
+ZZ8_5.2b <- rbind(out.cimPGavg, out.cimGIavg)
+ZZ8_5.2b$Population <- ("5.2b")
+
+```
+
+QTL Graph for GI
+```{r  warning=FALSE, message=FALSE}
+
+ZZ8_QTL <- rbind(ZZ8_all, ZZ8_5.1, ZZ8_5.2b, ZZ8_5.2a)
+GI <- ZZ8_QTL[(ZZ8_QTL$Trait %in% "GI"),]
+
+ggplot(data = GI , aes(x=GI$pos, y=GI$lod)) + 
+  geom_line(aes(colour=GI$Population), size=1)+geom_hline(aes(yintercept = 1.85))+
+  theme_bw()+ theme(axis.text = font,  axis.title = font)+ 
+  labs(x = "Chromosome 4A ERA8 Region (cM)", y = "LOD")+
+  scale_color_manual(values=c("#78c679", "#006837", "#31a354","#A2CD5A")) #+ theme(legend.position="none") #+
+  #ggsave("ZZ8_4A_QTL.png", width = 3, height = 3, units = "in")
+```
+
+
+## Louise/ZakERA8 RIL F6:7 
+### EMS-derived SNPs 
+```{r  warning=FALSE, message=FALSE}
+data<-read.cross("csv",".","./LZ8_SNP1-SNP30_MKK3.csv",na.strings=c("-","NA","."),BC.gen=0, F.gen=5)
+data_2 <- calc.genoprob(data, step=0)
+
+out.cimE1PGD1 <- cim(data_2, pheno.col="E1D1",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD1$Trait <- ("E1PGD1") 
+out.cimE1PGD2 <- cim(data_2, pheno.col="E1D2",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD2$Trait <- ("E1PGD2")
+out.cimE1PGD3 <- cim(data_2, pheno.col="E1D3",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD3$Trait <- ("E1PGD3")
+out.cimE1PGD4 <- cim(data_2, pheno.col="E1D4",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD4$Trait <- ("E1PGD4")
+out.cimE1PGD5 <- cim(data_2, pheno.col="E1D5",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD5$Trait <- ("E1PGD5")
+out.cimE1GIavg <- cim(data_2, pheno.col="E1GI",map.function=c("kosambi"),method=c("hk"))
+out.cimE1GIavg$Trait <- ("E1GIavg")
+
+out.cimE2PGD1 <- cim(data_2, pheno.col="E2D1",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD1$Trait <- ("E2PGD1")
+out.cimE2PGD2 <- cim(data_2, pheno.col="E2D2",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD2$Trait <- ("E2PGD2")
+out.cimE2PGD3 <- cim(data_2, pheno.col="E2D3",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD3$Trait <- ("E2PGD3")
+out.cimE2PGD4 <- cim(data_2, pheno.col="E2D4",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD4$Trait <- ("E2PGD4")
+out.cimE2PGD5 <- cim(data_2, pheno.col="E2D5",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD5$Trait <- ("E2PGD5")
+out.cimE2GIavg <- cim(data_2, pheno.col="E2GI",map.function=c("kosambi"),method=c("hk"))
+out.cimE2GIavg$Trait <- ("E2GIavg")
+
+out.cimE3PGD1 <- cim(data_2, pheno.col="E3D1",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD1$Trait <- ("E3PGD1")
+out.cimE3PGD2 <- cim(data_2, pheno.col="E3D2",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD2$Trait <- ("E3PGD2")
+out.cimE3PGD3 <- cim(data_2, pheno.col="E3D3",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD3$Trait <- ("E3PGD3")
+out.cimE3PGD4 <- cim(data_2, pheno.col="E3D4",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD4$Trait <- ("E3PGD4")
+out.cimE3PGD5 <- cim(data_2, pheno.col="E3D5",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD5$Trait <- ("E3PGD5")
+out.cimE3GIavg <- cim(data_2, pheno.col="E3GI",map.function=c("kosambi"),method=c("hk"))
+out.cimE3GIavg$Trait <- ("E3GIavg")
+
+QTL.LZ8.ERA8 <- rbind(out.cimE1PGD1, out.cimE1PGD2, out.cimE1PGD3, out.cimE1PGD4, out.cimE1PGD5, out.cimE1GIavg, out.cimE2PGD1, out.cimE2PGD2, out.cimE2PGD3, out.cimE2PGD4, out.cimE2PGD5, out.cimE2GIavg,out.cimE3PGD1, out.cimE3PGD2, out.cimE3PGD3, out.cimE3PGD4, out.cimE3PGD5, out.cimE3GIavg)
+QTL.LZ8.Day1 <- rbind(out.cimE1PGD1, out.cimE2PGD1,out.cimE3PGD1)
+QTL.LZ8.GI <- rbind(out.cimE1GIavg, out.cimE2GIavg,out.cimE3GIavg)
+```
+
+Add columns to the GBS data to give unique positions per chromosome for graphing purposes only. 
+```{r}
+uniqpos <- read.table("./GBS_UniquePos.txt",header=TRUE,na.string=c("", " ", "NA", "na"))
+```
+
+
+
+Calculating the significant LOD score threshold for each trait
+```{r eval=FALSE, warning=FALSE, message=FALSE}
+a<-scanone(data, method="hk", pheno.col = "E1D1", n.perm=1000)
+c<-scanone(data, method="hk", pheno.col = "E1D2", n.perm=1000)
+d<-scanone(data, method="hk", pheno.col = "E1D3", n.perm=1000)
+e<-scanone(data, method="hk", pheno.col = "E1D4", n.perm=1000)
+f<-scanone(data, method="hk", pheno.col = "E1D5", n.perm=1000)
+g<-scanone(data, method="hk", pheno.col = "E1GI", n.perm=1000)
+b1<-scanone(data, method="hk", pheno.col = "E2D1", n.perm=1000)
+c1<-scanone(data, method="hk", pheno.col = "E2D2", n.perm=1000)
+d1<-scanone(data, method="hk", pheno.col = "E2D3", n.perm=1000)
+e1<-scanone(data, method="hk", pheno.col = "E2D4", n.perm=1000)
+f1<-scanone(data, method="hk", pheno.col = "E2D5", n.perm=1000)
+g1<-scanone(data, method="hk", pheno.col = "E2GI", n.perm=1000)
+h<-scanone(data, method="hk", pheno.col = "E3D1", n.perm=1000)
+i<-scanone(data, method="hk", pheno.col = "E3D2", n.perm=1000)
+j<-scanone(data, method="hk", pheno.col = "E3D3", n.perm=1000)
+k<-scanone(data, method="hk", pheno.col = "E3D4", n.perm=1000)
+l<-scanone(data, method="hk", pheno.col = "E3D5", n.perm=1000)
+m<-scanone(data, method="hk", pheno.col = "E3GI", n.perm=1000)
+summary(a) #2.12 E1D1
+summary(c) #2.10
+summary(d) #2.20
+summary(e) #2.15
+summary(f) #2.02
+summary(g) #1.98
+summary(b1) #2.06 E2D1
+summary(c1) #2.17
+summary(d1) #2.03
+summary(e1) #1.96
+summary(f1) #2.17
+summary(g1) #2.10
+summary(h) #2.01 E3D1
+summary(i) #2.01
+summary(j) #2.21
+summary(k) #2.12
+summary(l) #2.11
+summary(m) #2.19
+```
+
+QTL Graph for GI
+```{r warning=FALSE, message=FALSE}
+ggplot(QTL.LZ8.GI, aes(x=QTL.LZ8.GI$pos, y=QTL.LZ8.GI$lod))+
+  geom_line(aes(colour = factor(Trait)),size = 1)+
+  theme_bw()+ theme(axis.text = font,  axis.title = font)+
+  geom_hline(aes(yintercept = 2.10))+ 
+  labs(x = "Chromosome 4A (cM)", y = NULL) +
+  ylim (0,10) +
+  scale_color_manual(values=c("#96CDCD", "#20B2AA", "#00868B")) #+ theme(legend.position="none") #+ 
+  # ggsave("LZ8_4A_QTL.png", width = 3, height = 3, units = "in")
+```
+
+### Genotyping-by-sequencing SNPs
+
+```{r warning=FALSE, message=FALSE}
+data <- read.cross("csv",".","./LZ8_GBS_all.csv",na.strings=c("-","NA","."),BC.gen=0, F.gen=5)
+plot.map(data)
+# plot.pheno(data,pheno.col=2) #E1_PGD1 Histogram
+# plot.pheno(data,pheno.col=3) #E2_PGD1 Histogram
+# plot.pheno(data,pheno.col=4) #E2_PGD2 Histogram
+# plot.pheno(data,pheno.col=5) #E2_PGD3 Histogram
+# plot.pheno(data,pheno.col=6) #E2_PGD4 Histogram
+# plot.pheno(data,pheno.col=7) #E2_PGD5 Histogram
+# plot.pheno(data,pheno.col=8) #E1_GIavg Histogram
+# plot.pheno(data,pheno.col=9) #E3_PGD1 Histogram
+# plot.pheno(data,pheno.col=10) #E3_PGD2 Histogram
+# plot.pheno(data,pheno.col=11) #E3_PGD3 Histogram
+# plot.pheno(data,pheno.col=12) #E3_PGD4 Histogram
+# plot.pheno(data,pheno.col=13) #E3_PGD5 Histogram
+# plot.pheno(data,pheno.col=14) #E3_GIavg Histogram
+geno.image(data)
+
+#Omit Skewed Markers
+gt<-geno.table(data)
+gt[gt$P.value<0.05/totmar(data),]
+drop <- c( "A15328_3A_7A_70" ,"A23596_unk_70" ,"A1484_unk_70" ,"A13016_1B_70" ,"A15940_1B_100" ,"A9591_1B_100" ,"A576_1B_70" ,"A18104_1D_100" ,"A27014_1B_2B_100","A17967_2D_100" ,"A13978_2D_70" ,"A25742_3A_100" ,"A18332_3A_70" ,"A12777_3D_100" ,"A273_4A_100" ,"A21245_4A_70" ,"A10491_4A_70" ,"A18377_4A_4B_70" ,"A25000_4B_70" ,"A25441_4B_100" ,"A4035_4D_100" ,"A18379_4D_100" ,"A18009_4D_70" ,"A19099_4D_7D_100","A16328_4D_70" ,"A11848_4D_70" ,"A12209_4D_100" ,"A27652_4D_100" ,"A21275_5A_100" ,"A25877_5A_100" ,"A25439_5A_70" ,"A25438_unk_70" ,"A20969_5A_70" ,"A8097_5A_100" ,"A19723_5A_100" ,"A11602_5A_100" ,"A7781_5A_100" ,"A11185_5D_100" ,"A27769_5D_100" ,"A16263_3D_5D_100","A18607_5D_100" ,"A25725_5D_100" ,"A1900_6A_70" ,"A11910_3A_6A_70" ,"A25264_6A_70" ,"A20866_6A_100" ,"A11585_6B_70" ,"A11967_6B_100" ,"A20255_6B_100" ,"A19959_6B_70" ,"A27878_6B_70" ,"A28179_6B_100" ,"A28536_6B_70" ,"A1460_6B_100" ,"A9811_6B_100" ,"A16328_6B_100" ,"A13442_6B_70" ,"A26650_3A_4B_70" ,"A8101_6B_100" ,"A7718_6B_6D_70" ,"A10138_6B_70" ,"A27566_unk_70" ,"A15195_unk_70" ,"A15639_unk_100" ,"A10596_6B_100" ,"A27867_unk_100" ,"A10599_unk_100" ,"A20619_6B_100" ,"A7070_6B_100" ,"A6713_1B_6B_70" ,"A22215_6B_100" ,"A499_5D_100" ,"A21788_6D_70" ,"A21995_6D_100" ,"A18389_6D_100" ,"A11691_6D_100" ,"A11316_6D_70" ,"A28649_6D_70" ,"A28881_6D_100" ,"A18071_6D_100" ,"A8016_7A_7D_100" ,"A6637_unk_70" ,"A7471_7A_100" ,"A12324_4B_7B_70" ,"A13388_7B_100" ,"A28147_7B_100" ,"A27851_7B_70" ,"A11842_7D_70" ,"A28228_7D_100" ,"A21486_7D_100" ,"A27928_7D_70" ,"A18989_unk_100","A7100_7A_70","A23150_unk_70")
+data <- drop.markers(data, drop)
+gt<-geno.table(data)
+gt[gt$P.value<0.05/totmar(data),]
+```
+
+QTL analysis across all traits  
+Traits: E1D1	E1D2	E1D3	E1D4	E1D5	E1GI	E2D1	E2D2	E2D3	E2D4	E2D5	E2GI	E3D1	E3D2	E3D3	E3D4	E3D5	E3GI
+
+```{r warning=FALSE, message=FALSE}
+data_2 <- calc.genoprob(data, step=0)
+out.cimE1PGD1 <- cim(data_2, pheno.col="E1D1",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD1$Trait <- ("E1PGD1") 
+out.cimE1PGD2 <- cim(data_2, pheno.col="E1D2",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD2$Trait <- ("E1PGD2")
+out.cimE1PGD3 <- cim(data_2, pheno.col="E1D3",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD3$Trait <- ("E1PGD3")
+out.cimE1PGD4 <- cim(data_2, pheno.col="E1D4",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD4$Trait <- ("E1PGD4")
+out.cimE1PGD5 <- cim(data_2, pheno.col="E1D5",map.function=c("kosambi"),method=c("hk"))
+out.cimE1PGD5$Trait <- ("E1PGD5")
+out.cimE1GIavg <- cim(data_2, pheno.col="E1GI",map.function=c("kosambi"),method=c("hk"))
+out.cimE1GIavg$Trait <- ("E1GIavg")
+out.cimE2PGD1 <- cim(data_2, pheno.col="E2D1",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD1$Trait <- ("E2PGD1")
+out.cimE2PGD2 <- cim(data_2, pheno.col="E2D2",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD2$Trait <- ("E2PGD2")
+out.cimE2PGD3 <- cim(data_2, pheno.col="E2D3",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD3$Trait <- ("E2PGD3")
+out.cimE2PGD4 <- cim(data_2, pheno.col="E2D4",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD4$Trait <- ("E2PGD4")
+out.cimE2PGD5 <- cim(data_2, pheno.col="E2D5",map.function=c("kosambi"),method=c("hk"))
+out.cimE2PGD5$Trait <- ("E2PGD5")
+out.cimE2GIavg <- cim(data_2, pheno.col="E2GI",map.function=c("kosambi"),method=c("hk"))
+out.cimE2GIavg$Trait <- ("E2GIavg")
+out.cimE3PGD1 <- cim(data_2, pheno.col="E3D1",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD1$Trait <- ("E3PGD1")
+out.cimE3PGD2 <- cim(data_2, pheno.col="E3D2",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD2$Trait <- ("E3PGD2")
+out.cimE3PGD3 <- cim(data_2, pheno.col="E3D3",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD3$Trait <- ("E3PGD3")
+out.cimE3PGD4 <- cim(data_2, pheno.col="E3D4",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD4$Trait <- ("E3PGD4")
+out.cimE3PGD5 <- cim(data_2, pheno.col="E3D5",map.function=c("kosambi"),method=c("hk"))
+out.cimE3PGD5$Trait <- ("E3PGD5")
+out.cimE3GIavg <- cim(data_2, pheno.col="E3GI",map.function=c("kosambi"),method=c("hk"))
+out.cimE3GIavg$Trait <- ("E3GIavg")
+
+QTL.LZ8.ERA8 <- rbind(out.cimE1PGD1, out.cimE1PGD2, out.cimE1PGD3, out.cimE1PGD4, out.cimE1PGD5, out.cimE1GIavg, out.cimE2PGD1, out.cimE2PGD2, out.cimE2PGD3, out.cimE2PGD4, out.cimE2PGD5, out.cimE2GIavg,out.cimE3PGD1, out.cimE3PGD2, out.cimE3PGD3, out.cimE3PGD4, out.cimE3PGD5, out.cimE3GIavg)
+# write.table(QTL.LZ8.ERA8, "./QTLLZ8All.txt", sep="\t")
+```
+
+```{r eval=FALSE}
+a<-scanone(data, method="hk", pheno.col = "E1D1", n.perm=1000)
+c<-scanone(data, method="hk", pheno.col = "E1D2", n.perm=1000)
+d<-scanone(data, method="hk", pheno.col = "E1D3", n.perm=1000)
+e<-scanone(data, method="hk", pheno.col = "E1D4", n.perm=1000)
+f<-scanone(data, method="hk", pheno.col = "E1D5", n.perm=1000)
+g<-scanone(data, method="hk", pheno.col = "E1GI", n.perm=1000)
+b1<-scanone(data, method="hk", pheno.col = "E2D1", n.perm=1000)
+c1<-scanone(data, method="hk", pheno.col = "E2D2", n.perm=1000)
+d1<-scanone(data, method="hk", pheno.col = "E2D3", n.perm=1000)
+e1<-scanone(data, method="hk", pheno.col = "E2D4", n.perm=1000)
+f1<-scanone(data, method="hk", pheno.col = "E2D5", n.perm=1000)
+g1<-scanone(data, method="hk", pheno.col = "E2GI", n.perm=1000)
+h<-scanone(data, method="hk", pheno.col = "E3D1", n.perm=1000)
+i<-scanone(data, method="hk", pheno.col = "E3D2", n.perm=1000)
+j<-scanone(data, method="hk", pheno.col = "E3D3", n.perm=1000)
+k<-scanone(data, method="hk", pheno.col = "E3D4", n.perm=1000)
+l<-scanone(data, method="hk", pheno.col = "E3D5", n.perm=1000)
+m<-scanone(data, method="hk", pheno.col = "E3GI", n.perm=1000)
+summary(a) #
+summary(c) #
+summary(d) #
+summary(e) #
+summary(f) #
+summary(g) #
+summary(b1) #
+summary(c1) #
+summary(d1) #
+summary(e1) #
+summary(f1) #
+summary(g1) #
+summary(h) #
+summary(i) #
+summary(j) #
+summary(k) #
+summary(l) #
+summary(m) #
+```
+
+QTL Graph 
+```{r  warning=FALSE, message=FALSE}
+QTL.LZ8.ERA8<-read.table("LZ8_QTL_GBS.txt",header=TRUE,na.string=c("", " ", "NA", "na"))
+ggplot(QTL.LZ8.ERA8, aes(x=QTL.LZ8.ERA8$order, y=QTL.LZ8.ERA8$lod))+
+  geom_point(aes(colour = factor(Genome)),size = 2)+ylim(0,6)+theme_bw()+ theme(axis.text = font,  axis.title = font, axis.text.x=element_blank())+ scale_color_manual(values=c("#0A0A0A", "#8A8A8A", "#D1D1D1","#8B4500"))+ 
+  labs(x = "Chromosome 1A - 7D and Unknown" , y = "LOD", title="ABA Sensitivity QTL")
+```
+
+
+### Heading and Height  
+
+```{r  warning= FALSE, message=FALSE}
+data_2 <- calc.genoprob(data, step=0)
+out.cimHeight <- cim(data_2, pheno.col="Height",map.function=c("kosambi"),method=c("hk"))
+out.cimHeight$Trait <- ("Height") 
+out.cimHeading <- cim(data_2, pheno.col="Heading",map.function=c("kosambi"),method=c("hk"))
+out.cimHeading$Trait <- ("Heading")
+a<-scanone(data, method="hk", pheno.col = "Heading", n.perm=1000)
+summary(a) #4.43 5%
+a<-scanone(data, method="hk", pheno.col = "Height", n.perm=1000)
+summary(a) #4.38 5%
+```
+
+
+```{r  warning= FALSE, message=FALSE}
+# write.table(out.cimHeading, "./QTLheadingLZ8.txt", sep="\t")
+QTLheadingLZ8<-read.table("./LZ8_QTL_heading.txt",header=TRUE,na.string=c("", " ", "NA", "na"))
+
+ggplot(QTLheadingLZ8, aes(x=QTLheadingLZ8$order, y=QTLheadingLZ8$lod))+
+  geom_point(aes(colour = factor(Genome)), size = 2)+theme_bw()+ylim(0,6)+ 
+  theme(axis.text = font,  axis.title = font, axis.text.x=element_blank())+ 
+  scale_color_manual(values=c("#0A0A0A", "#8A8A8A", "#D1D1D1","#000000"))+ geom_hline(aes(yintercept = 4.4))+ 
+  labs(x = "Chromosome 1A - 7D and Unknown" , y = "LOD", title="Heading Date QTL")
+
+# write.table(out.cimHeight, "./QTLheightLZ8.txt", sep="\t")
+QTLheightLZ8<-read.table("./LZ8_QTL_height.txt",header=TRUE,na.string=c("", " ", "NA", "na"))
+
+ggplot(QTLheightLZ8, aes(x=QTLheightLZ8$order, y=QTLheightLZ8$lod))+
+  geom_point(aes(colour = factor(Genome)), size = 2)+theme_bw()+ylim(0,6) +
+  theme(axis.text = font,  axis.title = font, axis.text.x=element_blank())+ 
+  scale_color_manual(values=c("#0A0A0A", "#8A8A8A", "#D1D1D1","#000000"))+ geom_hline(aes(yintercept = 4.4))+ 
+  labs(x = "Chromosome 1A - 7D and Unknown" , y = "LOD", title="Height QTL")
+
+QTL.LZ8<-read.table("./LZ8_QTL_GBS_ABAHeadHei.txt",header=TRUE,na.string=c("", " ", "NA", "na"))
+ggplot(QTL.LZ8, aes(x=QTL.LZ8$order, y=QTL.LZ8$lod))+
+  geom_point(aes(colour = factor(Genome)),size = 2)+ylim(0,6)+theme_bw()+ 
+  theme(axis.text = font,  axis.title = font, axis.text.x=element_blank())+ 
+  scale_color_manual(values=c("#0A0A0A", "#8A8A8A", "#D1D1D1","#A2CD5A")) + geom_hline(aes(yintercept = 4.4))+ 
+  labs(x = "Chromosome 1A - 7D and Unknown" , y = "LOD", title="ABA, Heading Date, and Height QTL")
+
+QTL.LZ8.4A<-read.table("./LZ8_QTL_GBS_ABAHeadHei_4A.txt",header=TRUE,na.string=c("", " ", "NA", "na"))
+ggplot(QTL.LZ8.4A, aes(x=QTL.LZ8.4A$order, y=QTL.LZ8.4A$lod))+
+  geom_point(aes(colour = factor(chr)),size = 2)+ylim(0,6)+theme_bw()+ 
+  theme(axis.text = font,  axis.title = font, axis.text.x=element_blank())+ 
+  scale_color_manual(values=c("#0A0A0A", "#8A8A8A", "#D1D1D1")) + geom_hline(aes(yintercept = 4.4))+ 
+  labs(x = "Chromosome 4A" , y = "LOD", title="ABA, Heading Date, and Height QTL")
+
+```
+
+
+## Otis/ZakERA8 F2:3 
+
+
+
+```{r warning = FALSE, message=FALSE}
+data<-read.cross("csv",".","./OZ8_SNP6-SNP29.csv",na.strings=c("-","NA","."),BC.gen=0, F.gen=2)
+geno.image(data)
+summary(data$pheno)
+gt<-geno.table(data)
+gt[gt$P.value<0.05/totmar(data),]  # no markers are skewed
+```
+
+For F3 QTL mapping, The percent germ is separated by day (D1...D5) and Germ Inxed over all 5 days  
+PG_d1	PG_d2	PG_d3	PG_d4	PG_d5	GI  
+
+```{r warning = FALSE, message=FALSE}
+data_2 <- calc.genoprob(data, step=0)
+out.cimGI <- cim(data_2, pheno.col="GI",map.function=c("kosambi"),method=c("hk"))
+a<-scanone(data, method="hk", pheno.col = "GI", n.perm=1000)
+summary(a) #1.78 GI
+
+out.cimd5 <- cim(data_2, pheno.col="PG_d5",map.function=c("kosambi"),method=c("hk"))
+a<-scanone(data, method="hk", pheno.col = "PG_d5", n.perm=1000)
+summary(a) #1.73 PG_d5
+
+out.cimd4 <- cim(data_2, pheno.col="PG_d4",map.function=c("kosambi"),method=c("hk"))
+out.cimd3 <- cim(data_2, pheno.col="PG_d3",map.function=c("kosambi"),method=c("hk"))
+out.cimd2 <- cim(data_2, pheno.col="PG_d2",map.function=c("kosambi"),method=c("hk"))
+out.cimd1 <- cim(data_2, pheno.col="PG_d1",map.function=c("kosambi"),method=c("hk"))
+
+out.cimd5$Pheno <- "d5"
+out.cimd4$Pheno <- "d4"
+out.cimd3$Pheno <- "d3"
+out.cimd2$Pheno <- "d2"
+out.cimd1$Pheno <-"d1"
+out.cimGI$Pheno <-"GI"
+Otera8 <- rbind(out.cimGI ,out.cimd5,out.cimd4,out.cimd3,out.cimd2,out.cimd1 )
+```
+
+```{r warning = FALSE, message=FALSE}
+ggplot(Otera8, aes(x=Otera8$pos, y=Otera8$lod, colour = factor(Otera8$Pheno)))+
+  geom_line(size = 1.5)+
+  theme_bw()+ theme(axis.text = font,  axis.title = font)+
+  geom_hline(aes(yintercept = 1.73, colour = ""))+ 
+  labs(x = "Chromosome 4A (cM)", y = "LOD") 
+
+out.cimGI2 <- rbind(out.cimGI, out.cimd5)
+ggplot(out.cimGI2, aes(x=out.cimGI2$pos, y=out.cimGI2$lod))+
+  geom_line(aes(colour = factor(Pheno)),size = 1)+
+  theme_bw()+ theme(axis.text = font,  axis.title = font)+
+  geom_hline(aes(yintercept = 1.78))+ 
+  labs(x = "Chromosome 4A (cM)", y = "LOD")  +
+  ylim (0,10) +xlim (0,11)+
+  scale_color_manual(values=c("#CD6600","#FFB90F")) #+ theme(legend.position="none")
+
+
+```
+
+
+
