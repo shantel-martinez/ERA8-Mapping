@@ -1,0 +1,19 @@
+#Working directory - where your fasta sequence reads are located
+/home/user/Documents/GBS/GBSproject
+#file type extension. DO include the leading period if your files have it, such as .fa  - leave the next line blank if your are not using a file extension.
+
+#Number of cores available
+28
+#Length of tags
+80
+#Required read depth, i.e. how many times a read must appear in the data file to be considered real
+2
+#Required sequence at the start of each tag (usually a restriction site). Leave the next line blank if you do not want to screen for a start sequence.
+TGCAG
+#Lowest frequency allowed among the samples, typically 0.2 in a biparental study, 0.1 in an AM panel
+0.2
+#Highest frequency allowed among the samples, typically 0.8 in a biparental study, 0.9 in an AM panel
+0.8
+#Directory of genome sequences - must contain SOAP indexed whole genome reads, usually as individual chromosomes
+/home/seq_user/RefSeqv1
+
