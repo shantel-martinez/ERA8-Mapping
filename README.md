@@ -5,6 +5,7 @@
 
 This repository contains all datasets for the paper, Martinez et al. 2020, and can be used to enable reproducibility of the QTL Mapping and figures created.  
 
+### Access
 View the R code, analysis, and figures in the RPub website: [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping)<br/>
 
 ### File Descriptions   
