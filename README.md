@@ -24,4 +24,5 @@ uniqpos "./GBS_UniquePos.txt"
 uniqposAHH "./GBS_UniquePos_ABAHeadHei.txt"  
 ATol "AllTolQTLAlleles.txt"
 ParABA "./LZ8ARTC_2014.csv"  
-
+ZParABA "./ZZ8ARTC_E1.csv"
+imap  "./ZZ8 5.1 5.2 Group Data for R.csv"
