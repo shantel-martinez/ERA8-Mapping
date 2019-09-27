@@ -4,17 +4,21 @@
 **Authors**: Shantel A. Martinez, Oluwayesi Shorinola, Samantha Conselman, Deven See, Daniel Z. Skinner, Cristobal Uauy, and Camille M. Steber  
 
 This repository contains all datasets for the paper, Martinez et al. 2019, and can be used to enable reproducibility of the QTL Mapping and figures created.  
+> PLEASE REFER TO THE MATERIALS AND METHODS SECTION FOR REFERENCE  
 
-### Access
-View the R code, analysis, and figures in the RPub website: [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping)<br/>
+### Exome-Capture  
+Post-alignment SNP calls are available upon request.   
 
 ### GBS Analysis 
 [README and scripts](https://github.com/shantel-martinez/ERA8-Mapping/tree/master/GBS) are available used for alignment and SNP calls in the Louise/ZakERA8 RIL population.  
 Data wrangling from raw .csv files to JoinMap format was conducted in excel.   
 All SNPs were included in the JoinMap linkage grouping. Raw data prior to linkage grouping is available upon request.    
-The final genetic map, GBS genotypes, and dormancy phenotypes of the Louise/ZakERA8 RIL population is saved as [LZ8_SNP1-SNP30_MKK3.csv](https://github.com/shantel-martinez/ERA8-Mapping/blob/master/data/LZ8_GBS_all.csv) and also in Martinez et al. (2019) SUPPLEMENTAL TABLE 3.   
+The final genetic map, GBS genotypes, and dormancy phenotypes of the Louise/ZakERA8 RIL population is available in the [/data/LZ8_SNP1-SNP30_MKK3.csv](https://github.com/shantel-martinez/ERA8-Mapping/blob/master/data/LZ8_GBS_all.csv) file and also in Martinez et al. (2019) SUPPLEMENTAL TABLE 3.   
 
-### File Descriptions   
+### QTL Analysis
+View the R code, analysis, and figure creation in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) file
+
+#### File Descriptions   
 Multiple files are included in the data analysis.   
 
 ZZ8  "./ZZ8_SNP1-SNP_30_all.csv"  
