@@ -16,7 +16,9 @@ All SNPs were included in the JoinMap linkage grouping. Raw data prior to linkag
 The final genetic map, GBS genotypes, and dormancy phenotypes of the Louise/ZakERA8 RIL population is available in the [/data/LZ8_SNP1-SNP30_MKK3.csv](https://github.com/shantel-martinez/ERA8-Mapping/blob/master/data/LZ8_GBS_all.csv) file and also in Martinez et al. (2019) SUPPLEMENTAL TABLE 3.   
 
 ### QTL Analysis
-View the R code, analysis, and figure creation in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) file
+View the R code, analysis, and figure creation in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) website.  
+To download all of the data files (listed below) as an `ERA8-Mapping-Data.RData` file for this analysis, [click here](data:application/octet-stream;base64,H4sIAAAAAAAABgtyiTDiiuBiYGBgYmBmZWZgYgYyWZiABCMDCwMniE4FEgJAzA8VYPaJsoAy2YBMd6dgKI89KiCxyNHJEcplScvPK4GyuUrzMgsL8osdPTxgspm5iQUwjVBZKJcjJbEk0VTPKBGNnwTl8+gFJeal5OfqFaempsCMcwzJz4EZB1FvCHMkiquY/eGuZ44CMhkY/gEAKMACDwQBAAA=) 
+
 
 #### File Descriptions   
 Multiple files are included in the data analysis.   
