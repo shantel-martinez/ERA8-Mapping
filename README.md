@@ -17,8 +17,6 @@ The final genetic map, GBS genotypes, and dormancy phenotypes of the Louise/ZakE
 
 ### QTL Analysis
 View the R code, analysis, and figure creation in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) website.  
-You can download all of the data files (listed below) as an `ERA8-Mapping-Data.RData` file for this analysis, linked in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) website under the header `LOAD DATA`.  
-
 
 #### File Descriptions   
 Multiple files are included in the data analysis.   
@@ -38,3 +36,14 @@ ATol "AllTolQTLAlleles.txt"
 ParABA "./LZ8ARTC_2014.csv"  
 ZParABA "./ZZ8ARTC_E1.csv"
 imap  "./ZZ8 5.1 5.2 Group Data for R.csv"
+
+#### Reproducing QTL Analysis
+You can download all of the data files (listed below) as an `ERA8-Mapping-Data.RData` file for this analysis, linked in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) website under the header `Load All Data`.    
+
+Run 
+```
+load("PATH/ERA8-Mapping-Data.RData")
+```
+in your R workspace with the correct PATH directory to the downloaded file.  
+
+
