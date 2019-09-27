@@ -3,7 +3,7 @@
 
 Author: Dan Z Skinner | USDA-ARS  Wheat Health, Genetics, and Quality Research | Pullman, WA
 
-This set of scripts processes raw sequence reads in fasta format resulting in presence absence calls and allele calls for short sequence tags of user- defined length.  
+This set of scripts processes raw genoytyping-by-sequencing (GBS) reads in fasta format, resulting in presence absence calls and allele calls for short sequence tags of user- defined length.  
 
 ### Preliminaries:    
 
