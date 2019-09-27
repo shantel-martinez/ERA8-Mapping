@@ -37,7 +37,7 @@ ParABA "./LZ8ARTC_2014.csv"
 ZParABA "./ZZ8ARTC_E1.csv"
 imap  "./ZZ8 5.1 5.2 Group Data for R.csv"
 
-#### Reproducing QTL Analysis
+#### Reproducing the QTL Analysis
 You can download all of the data files (listed below) as an `ERA8-Mapping-Data.RData` file for this analysis, linked in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) website under the header `Load All Data`.    
 
 Run 
