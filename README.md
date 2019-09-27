@@ -6,7 +6,7 @@
 This repository contains all datasets for the paper, Martinez et al. 2019, and can be used to enable reproducibility of the QTL Mapping and figures created.  
 > PLEASE REFER TO THE MATERIALS AND METHODS SECTION FOR REFERENCE  
 
-## Exome-Capture  
+## Exome Capture  
 Post-alignment SNP calls are available upon request.   
 
 ## GBS Analysis 
