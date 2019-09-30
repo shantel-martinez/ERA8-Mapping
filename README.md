@@ -56,7 +56,7 @@ Multiple files are included in the data analysis.
 
 
 ### Reproducing the QTL Analysis
-You can download all of the data files (listed below) as an `ERA8-Mapping-Data.RData` file for this analysis, linked in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) website under the header `Load All Data`.    
+Linked in the [QTL_Mapping_of_ERA8](http://rpubs.com/shantel-martinez/ERA8-Mapping) website under the header `Load All Data`, you can download all of the data files (listed above) as an `ERA8-Mapping-Data.RData` file for this analysis.   
 
 Run 
 ```
